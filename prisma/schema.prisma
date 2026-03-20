@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Equipment {
+  id               String   @id @default(cuid())
+  empresa          String   // "ENW" ou "DOGMA"
+  patrimonio       String   @unique
+  numeroSerie      String   @unique
+  macAddress       String
+  modelo           String
+  configuracoes    String   // Ex: i7, 16GB RAM, 512 SSD
+  idadeHardware    Int      // Anos
+  numeroReparos    Int      @default(0)
+  alertaTroca      Boolean  @default(false)
+  usuarioAtual     String
+  emailCorporativo String
+  criadoEm         DateTime @default(now())
+  atualizadoEm     DateTime @updatedAt
+}
