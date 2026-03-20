@@ -4,18 +4,17 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model Equipment {
   id               String   @id @default(cuid())
-  empresa          String   // "ENW" ou "DOGMA"
+  empresa          String   
   patrimonio       String   @unique
   numeroSerie      String   @unique
   macAddress       String
   modelo           String
-  configuracoes    String   // Ex: i7, 16GB RAM, 512 SSD
-  idadeHardware    Int      // Anos
+  configuracoes    String   
+  idadeHardware    Int      
   numeroReparos    Int      @default(0)
   alertaTroca      Boolean  @default(false)
   usuarioAtual     String
