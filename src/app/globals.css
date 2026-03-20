@@ -16,6 +16,7 @@
   --color-enwBlack: #0A0A0A;
   --color-enwGold: #D4AF37;
   --color-enwDarkGray: #1A1A1A;
+  --color-enwGray: #69582a;
 }
 
 @media (prefers-color-scheme: dark) {
