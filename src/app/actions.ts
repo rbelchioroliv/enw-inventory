@@ -11,15 +11,31 @@ export async function getEquipments() {
 
 export async function addEquipment(formData: FormData) {
   const idade = parseInt(formData.get("idadeHardware") as string);
+  
+ 
+  const snValue = formData.get("numeroSerie")?.toString().trim();
+  const numeroSerie = snValue === "" ? null : snValue;
+
+
+  const cpu = formData.get("cpu");
+  const ram = formData.get("ram");
+  const storageType = formData.get("storageType");
+  const storageInterface = formData.get("storageInterface");
+  const storageCapacity = formData.get("storageCapacity");
+
+  
+  const finalInterface = storageType === "HD" ? "SATA" : storageInterface;
+  const configuracoesTexto = `CPU: ${cpu} | RAM: ${ram} | ${storageType} ${finalInterface} ${storageCapacity}`;
+
   const data = {
     empresa: formData.get("empresa") as string,
     patrimonio: formData.get("patrimonio") as string,
-    numeroSerie: formData.get("numeroSerie") as string,
+    numeroSerie: numeroSerie,
     macAddress: formData.get("macAddress") as string,
     modelo: formData.get("modelo") as string,
-    configuracoes: formData.get("configuracoes") as string,
+    configuracoes: configuracoesTexto,
     idadeHardware: idade,
-    alertaTroca: idade >= 4, // Alerta automático se tiver 4 anos ou mais
+    alertaTroca: idade >= 4,
     usuarioAtual: formData.get("usuarioAtual") as string,
     emailCorporativo: formData.get("emailCorporativo") as string,
   }

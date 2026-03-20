@@ -10,7 +10,7 @@ model Equipment {
   id               String   @id @default(cuid())
   empresa          String   
   patrimonio       String   @unique
-  numeroSerie      String   @unique
+  numeroSerie      String?   @unique
   macAddress       String
   modelo           String
   configuracoes    String   
