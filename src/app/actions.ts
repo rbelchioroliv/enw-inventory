@@ -10,39 +10,70 @@ export async function getEquipments() {
 }
 
 export async function addEquipment(formData: FormData) {
-  const idade = parseInt(formData.get("idadeHardware") as string);
-  
- 
-  const snValue = formData.get("numeroSerie")?.toString().trim();
+
+  const macAddress = formData.get("macAddress") as string;
+  const usuarioAtual = formData.get("usuarioAtual") as string;
+  const emailCorporativo = formData.get("emailCorporativo") as string;
+  const patrimonio = formData.get("patrimonio") as string;
+
+  const snRaw = formData.get("numeroSerie");
+  const snValue = snRaw ? snRaw.toString().trim() : "";
   const numeroSerie = snValue === "" ? null : snValue;
 
 
+  const orConditions: any[] = [
+    { patrimonio },
+    { macAddress },
+    { usuarioAtual },
+    { emailCorporativo }
+  ];
+
+
+  if (numeroSerie) {
+    orConditions.push({ numeroSerie });
+  }
+
+  const existingEq = await prisma.equipment.findFirst({
+    where: { OR: orConditions }
+  });
+
+
+  if (existingEq) {
+    return { error: "Maquina ja cadastrada em um usuário, verifique e tente novamente! Se acha que isso foi um erro contacte o suporte via e-mail!" };
+  }
+
+
+  const idade = parseInt(formData.get("idadeHardware") as string);
   const cpu = formData.get("cpu");
   const ram = formData.get("ram");
   const storageType = formData.get("storageType");
   const storageInterface = formData.get("storageInterface");
   const storageCapacity = formData.get("storageCapacity");
 
-  
   const finalInterface = storageType === "HD" ? "SATA" : storageInterface;
   const configuracoesTexto = `CPU: ${cpu} | RAM: ${ram} | ${storageType} ${finalInterface} ${storageCapacity}`;
 
   const data = {
     empresa: formData.get("empresa") as string,
-    patrimonio: formData.get("patrimonio") as string,
-    numeroSerie: numeroSerie,
-    macAddress: formData.get("macAddress") as string,
+    patrimonio,
+    numeroSerie,
+    macAddress,
     modelo: formData.get("modelo") as string,
     configuracoes: configuracoesTexto,
     idadeHardware: idade,
     alertaTroca: idade >= 4,
-    usuarioAtual: formData.get("usuarioAtual") as string,
-    emailCorporativo: formData.get("emailCorporativo") as string,
+    usuarioAtual,
+    emailCorporativo,
   }
 
-  await prisma.equipment.create({ data })
-  revalidatePath("/")
-  revalidatePath("/admin")
+  try {
+    await prisma.equipment.create({ data })
+    revalidatePath("/")
+    revalidatePath("/admin")
+    return { success: true }
+  } catch (error) {
+    return { error: "Erro interno ao cadastrar no banco de dados." }
+  }
 }
 
 export async function deleteEquipment(id: string) {
