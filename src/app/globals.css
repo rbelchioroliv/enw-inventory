@@ -5,11 +5,17 @@
   --foreground: #171717;
 }
 
-@theme inline {
+@theme {
+  /* Cores padrão */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+
+  --color-enwBlack: #0A0A0A;
+  --color-enwGold: #D4AF37;
+  --color-enwDarkGray: #1A1A1A;
 }
 
 @media (prefers-color-scheme: dark) {
