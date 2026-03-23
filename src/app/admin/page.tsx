@@ -1,16 +1,12 @@
 import { getEquipments } from "../actions";
-import AdminForm from "./AdminForm";
-import AdminTable from "./AdminTable"; 
+import { getUsers } from "../user-actions";
+import AdminManager from "./AdminManager";
 
 export default async function AdminPage() {
   const equipamentos = await getEquipments();
+  const users = await getUsers();
 
   return (
-    <div className="space-y-8">
-     
-      <AdminForm />
-
-      <AdminTable equipamentos={equipamentos} />
-    </div>
+    <AdminManager equipamentos={equipamentos} users={users} />
   );
 }

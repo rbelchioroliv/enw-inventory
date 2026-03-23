@@ -22,3 +22,12 @@ model Equipment {
   criadoEm         DateTime @default(now())
   atualizadoEm     DateTime @updatedAt
 }
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("ADMIN")
+  criadoEm  DateTime @default(now())
+}
