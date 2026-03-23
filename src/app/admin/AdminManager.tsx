@@ -7,7 +7,7 @@ import UsersTab from "./UsersTab";
 import { Monitor, Users, LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 
-// Adicionámos o currentUserEmail nas props
+
 export default function AdminManager({ equipamentos, users, currentUserEmail }: { equipamentos: any[], users: any[], currentUserEmail?: string | null }) {
   const [activeTab, setActiveTab] = useState<"equipments" | "users">("equipments");
 
@@ -37,7 +37,7 @@ export default function AdminManager({ equipamentos, users, currentUserEmail }: 
           <AdminTable equipamentos={equipamentos} />
         </div>
       ) : (
-        // Passamos o email para a aba de utilizadores
+       
         <UsersTab users={users} currentUserEmail={currentUserEmail} /> 
       )}
     </div>

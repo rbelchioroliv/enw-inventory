@@ -30,7 +30,7 @@ export default function UsersTab({ users, currentUserEmail }: { users: any[], cu
     }
   }
 
-  // Passamos agora o currentUserEmail para a função de apagar
+
   async function handleDelete(id: string) {
     if(!confirm("Remover permanentemente este acesso?")) return;
     const res = await deleteUser(id, currentUserEmail);

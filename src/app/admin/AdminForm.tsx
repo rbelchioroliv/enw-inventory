@@ -9,16 +9,16 @@ export default function AdminForm() {
   const [loading, setLoading] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Esta função interceta o "Guardar", chama o servidor e verifica se há erro
+  
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     const result = await addEquipment(formData);
     setLoading(false);
 
     if (result?.error) {
-      setError(result.error); // Abre o Modal
+      setError(result.error); 
     } else if (result?.success) {
-      formRef.current?.reset(); // Limpa o formulário após o sucesso
+      formRef.current?.reset(); 
       setError(null);
     }
   }

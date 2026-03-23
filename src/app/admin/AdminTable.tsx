@@ -122,7 +122,7 @@ export default function AdminTable({ equipamentos }: { equipamentos: any[] }) {
                 {/* CAMPO: IDADE HARDWARE */}
                 <input type="number" name="idadeHardware" defaultValue={editingEq.idadeHardware} placeholder="Anos de uso" required className="bg-enwBlack border border-gray-700 text-white p-2.5 rounded focus:border-enwGold outline-none transition" title="Idade do Hardware (Anos)" />
                 
-                {/* NOVO CAMPO: NÚMERO DE REPAROS */}
+                {/*  NÚMERO DE REPAROS */}
                 <input type="number" name="numeroReparos" defaultValue={editingEq.numeroReparos} placeholder="Nº de Reparos" required className="bg-enwBlack border border-gray-700 text-white p-2.5 rounded focus:border-enwGold outline-none transition" title="Número de Reparos" />
                 
                 <input type="text" name="usuarioAtual" defaultValue={editingEq.usuarioAtual} required className="bg-enwBlack border border-gray-700 text-white p-2.5 rounded focus:border-enwGold outline-none transition" />

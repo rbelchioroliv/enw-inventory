@@ -75,12 +75,12 @@ export async function editUser(id: string, formData: FormData) {
   return { success: true };
 }
 
-// FUNÇÃO ATUALIZADA: Bloqueia a exclusão do próprio perfil
+
 export async function deleteUser(id: string, currentUserEmail?: string | null) {
-  // 1. Verifica quem está a tentar ser apagado
+
   const userToDelete = await prisma.user.findUnique({ where: { id } });
   
-  // 2. Se for a própria pessoa, bloqueia!
+  
   if (userToDelete?.email === currentUserEmail) {
     return { error: "Por medidas de segurança, você não pode excluir o seu próprio perfil!" };
   }
