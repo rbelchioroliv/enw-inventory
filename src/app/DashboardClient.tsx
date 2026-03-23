@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AlertTriangle, Laptop, Wrench, User, Hash, HardDrive, Calendar, Fingerprint, X, Mail, Cpu, SearchX } from "lucide-react";
+import { AlertTriangle, Laptop, Wrench, User, Hash, HardDrive, Calendar, Fingerprint, X, Mail, Cpu, SearchX, Download } from "lucide-react";
+import { exportToExcel } from "@/lib/exportExcel"; 
 
 export default function DashboardClient({ equipamentos }: { equipamentos: any[] }) {
-  
+
   const [selectedEq, setSelectedEq] = useState<any | null>(null);
 
   
@@ -12,7 +13,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
   const [filterPatrimonio, setFilterPatrimonio] = useState("");
   const [filterSN, setFilterSN] = useState("");
 
-
+  
   useEffect(() => {
     if (selectedEq) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'unset';
@@ -42,19 +43,31 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         <h1 className="text-3xl font-extrabold text-white tracking-tight drop-shadow-sm">
           Visão Geral do Inventário
         </h1>
-        <div className="text-sm font-medium text-gray-200 bg-enwBlack px-4 py-2 rounded-full border border-enwGold/20 shadow-inner whitespace-nowrap">
-          Exibindo: <span className="text-enwGold font-bold mx-1">{filteredEquipamentos.length}</span> 
-          {equipamentos.length !== filteredEquipamentos.length && <span className="text-gray-500">de {equipamentos.length}</span>}
+
+    
+        <div className="flex items-center gap-3">
+          <div className="text-sm font-medium text-gray-200 bg-enwBlack px-4 py-2.5 rounded-lg border border-enwGold/20 shadow-inner whitespace-nowrap">
+            Exibindo: <span className="text-enwGold font-bold mx-1">{filteredEquipamentos.length}</span>
+            {equipamentos.length !== filteredEquipamentos.length && <span className="text-gray-500">de {equipamentos.length}</span>}
+          </div>
+
+          <button
+            onClick={() => exportToExcel(filteredEquipamentos)} 
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-sm font-bold rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all hover:-translate-y-0.5"
+            title="Exportar para Excel"
+          >
+            <Download size={18} /> Excel
+          </button>
         </div>
       </div>
 
-     
+
       <div className="bg-enwDarkGray/60 border border-white/5 p-4 rounded-xl flex flex-col md:flex-row gap-4 shadow-sm backdrop-blur-sm">
         <div className="relative flex-1 group">
           <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-enwGold transition-colors" />
-          <input 
-            type="text" 
-            placeholder="Buscar por Usuário..." 
+          <input
+            type="text"
+            placeholder="Buscar por Usuário..."
             value={filterUsuario}
             onChange={(e) => setFilterUsuario(e.target.value)}
             className="w-full bg-enwBlack border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-white focus:border-enwGold outline-none transition text-sm shadow-inner"
@@ -62,9 +75,9 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         </div>
         <div className="relative flex-1 group">
           <Hash size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-enwGold transition-colors" />
-          <input 
-            type="text" 
-            placeholder="Buscar por Patrimônio..." 
+          <input
+            type="text"
+            placeholder="Buscar por Patrimônio..."
             value={filterPatrimonio}
             onChange={(e) => setFilterPatrimonio(e.target.value)}
             className="w-full bg-enwBlack border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-white focus:border-enwGold outline-none transition text-sm shadow-inner"
@@ -72,35 +85,34 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         </div>
         <div className="relative flex-1 group">
           <Fingerprint size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-enwGold transition-colors" />
-          <input 
-            type="text" 
-            placeholder="Buscar por S/N..." 
+          <input
+            type="text"
+            placeholder="Buscar por S/N..."
             value={filterSN}
             onChange={(e) => setFilterSN(e.target.value)}
             className="w-full bg-enwBlack border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-white focus:border-enwGold outline-none transition text-sm shadow-inner"
           />
         </div>
       </div>
-      
-      
+
+
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-2">
         {filteredEquipamentos.map((eq) => (
-          <div 
-            key={eq.id} 
-            onClick={() => setSelectedEq(eq)} 
-            className={`relative flex flex-col p-6 rounded-2xl border cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-in fade-in zoom-in-95 ${
-              eq.alertaTroca 
-                ? 'border-red-500/30 bg-gradient-to-b from-red-950/30 to-enwDarkGray shadow-[0_0_15px_rgba(239,68,68,0.05)]' 
+          <div
+            key={eq.id}
+            onClick={() => setSelectedEq(eq)}
+            className={`relative flex flex-col p-6 rounded-2xl border cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-in fade-in zoom-in-95 ${eq.alertaTroca
+                ? 'border-red-500/30 bg-gradient-to-b from-red-950/30 to-enwDarkGray shadow-[0_0_15px_rgba(239,68,68,0.05)]'
                 : 'border-white/5 bg-enwDarkGray hover:border-enwGold/30 hover:bg-enwDarkGray/80'
-            }`}
+              }`}
           >
             {eq.alertaTroca && (
               <div className="absolute -top-3 -right-3 flex items-center gap-1.5 text-xs font-bold text-red-50 bg-red-600 px-3 py-1.5 rounded-full shadow-lg shadow-red-900/50 animate-pulse z-10">
-                <AlertTriangle size={14} /> 
+                <AlertTriangle size={14} />
                 TROCA RECOMENDADA
               </div>
             )}
-            
+
             <div className="flex items-start gap-4 mb-5">
               <div className={`p-3.5 rounded-xl border ${eq.alertaTroca ? 'bg-red-950/50 border-red-500/20 text-red-400' : 'bg-enwBlack border-enwGold/20 text-enwGold shadow-inner'}`}>
                 <Laptop size={28} />
@@ -124,11 +136,11 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
 
               <div className="grid grid-cols-2 gap-4 pt-3 border-t border-white/5">
                 <div className="min-w-0">
-                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider flex items-center gap-1.5 mb-1"><Hash size={12}/> Patrimônio</p>
+                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider flex items-center gap-1.5 mb-1"><Hash size={12} /> Patrimônio</p>
                   <p className="text-sm font-medium text-gray-300 truncate">{eq.patrimonio}</p>
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider flex items-center gap-1.5 mb-1"><HardDrive size={12}/> Configs</p>
+                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider flex items-center gap-1.5 mb-1"><HardDrive size={12} /> Configs</p>
                   <p className="text-xs text-gray-300 truncate text-enwGold/80 hover:text-enwGold transition-colors" title="Clique para ver completo">Ver detalhes...</p>
                 </div>
               </div>
@@ -146,7 +158,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
           </div>
         ))}
 
-       
+
         {filteredEquipamentos.length === 0 && equipamentos.length > 0 && (
           <div className="col-span-full py-16 flex flex-col items-center justify-center text-center border-2 border-dashed border-white/10 rounded-2xl bg-enwBlack/30 animate-in fade-in">
             <div className="p-4 bg-enwDarkGray rounded-full mb-4 border border-white/5 text-gray-500">
@@ -160,7 +172,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
           </div>
         )}
 
-    
+
         {equipamentos.length === 0 && (
           <div className="col-span-full py-24 flex flex-col items-center justify-center text-center border-2 border-dashed border-white/10 rounded-2xl bg-enwBlack/30">
             <h3 className="text-xl font-bold text-gray-300">Nenhum equipamento cadastrado</h3>
@@ -168,7 +180,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         )}
       </div>
 
-    
+
       {selectedEq && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedEq(null)}>
           <div className="bg-enwDarkGray border border-enwGold/30 rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative" onClick={e => e.stopPropagation()}>
@@ -193,7 +205,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
             <div className="space-y-6">
               <div className="bg-enwBlack/50 p-5 rounded-xl border border-white/5">
                 <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <User size={16} className="text-enwGold"/> Informações de Usuário
+                  <User size={16} className="text-enwGold" /> Informações de Usuário
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -203,7 +215,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
                   <div>
                     <p className="text-xs text-gray-500 mb-1">E-mail Corporativo</p>
                     <p className="text-white font-medium flex items-center gap-2 break-all">
-                      <Mail size={14} className="text-gray-500 shrink-0"/> {selectedEq.emailCorporativo}
+                      <Mail size={14} className="text-gray-500 shrink-0" /> {selectedEq.emailCorporativo}
                     </p>
                   </div>
                 </div>
@@ -211,7 +223,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
 
               <div className="bg-enwBlack/50 p-5 rounded-xl border border-white/5">
                 <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <Cpu size={16} className="text-enwGold"/> Especificações Técnicas
+                  <Cpu size={16} className="text-enwGold" /> Especificações Técnicas
                 </h3>
                 <div className="space-y-5">
                   <div className="bg-enwBlack border border-white/5 p-4 rounded-lg">
@@ -224,7 +236,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
                     <div>
                       <p className="text-xs text-gray-500 mb-1">Tempo de Uso</p>
                       <p className="text-white font-medium">
-                        {selectedEq.idadeHardware} anos 
+                        {selectedEq.idadeHardware} anos
                         {selectedEq.alertaTroca && <span className="text-red-400 text-xs ml-2 font-bold block md:inline mt-1 md:mt-0">(Troca Recomendada)</span>}
                       </p>
                     </div>
@@ -238,7 +250,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
 
               <div className="bg-enwBlack/50 p-5 rounded-xl border border-white/5">
                 <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <Hash size={16} className="text-enwGold"/> Identificadores de Rede e Físico
+                  <Hash size={16} className="text-enwGold" /> Identificadores de Rede e Físico
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
