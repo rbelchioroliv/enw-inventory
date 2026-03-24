@@ -23,16 +23,16 @@ export default function LoginPage() {
     const formData = new FormData(e.currentTarget);
 
     if (!hasUsers) {
-      // Criar Primeiro Admin
+     
       const res = await setupFirstAdmin(formData);
       if (res?.error) {
         setError(res.error);
         setLoading(false);
       } else {
-        window.location.reload(); // Recarrega para mostrar o login
+        window.location.reload();
       }
     } else {
-      // Fazer Login Normal
+      
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
       
@@ -48,7 +48,7 @@ export default function LoginPage() {
     }
   }
 
-  if (hasUsers === null) return null; // A carregar...
+  if (hasUsers === null) return null;
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
