@@ -3,7 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRAGMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Equipment {
