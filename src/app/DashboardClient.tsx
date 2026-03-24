@@ -32,7 +32,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
   return (
     <div className="space-y-6 max-w-full overflow-hidden px-2 sm:px-0">
       
-      {/* CABEÇALHO MOBILE-FRIENDLY */}
+      
       <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-enwGold/20 pb-4 gap-4">
         <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight drop-shadow-sm text-center lg:text-left">
           Visão Geral do <span className="text-enwGold">Inventário</span>
@@ -53,7 +53,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         </div>
       </div>
 
-      {/* BARRA DE FILTROS MOBILE-FRIENDLY */}
+    
       <div className="bg-enwDarkGray/60 border border-white/5 p-4 rounded-xl flex flex-col md:flex-row gap-3 shadow-sm backdrop-blur-sm">
         <div className="relative flex-1 group">
           <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-enwGold transition-colors" />
@@ -69,7 +69,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         </div>
       </div>
       
-      {/* GRELHA */}
+   
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 pt-2">
         {filteredEquipamentos.map((eq) => (
           <div key={eq.id} onClick={() => setSelectedEq(eq)} className={`relative flex flex-col p-5 sm:p-6 rounded-2xl border cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${eq.alertaTroca ? 'border-red-500/30 bg-gradient-to-b from-red-950/30 to-enwDarkGray' : 'border-white/5 bg-enwDarkGray hover:border-enwGold/30'}`}>
@@ -122,7 +122,6 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         ))}
       </div>
 
-      {/* MODAL MOBILE-FRIENDLY */}
       {selectedEq && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedEq(null)}>
           <div className="bg-enwDarkGray border border-enwGold/30 rounded-2xl p-4 sm:p-6 md:p-8 w-full max-w-2xl max-h-[95vh] overflow-y-auto no-scrollbar shadow-2xl relative" onClick={e => e.stopPropagation()}>

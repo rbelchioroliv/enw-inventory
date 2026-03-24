@@ -37,7 +37,7 @@ html, body {
  
   @apply bg-enwBlack text-white;
   
-  
+  touch-action: pan-x pan-y;
   -ms-overflow-style: none;  
   scrollbar-width: none;  
 }
@@ -55,4 +55,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 .no-scrollbar {
   -ms-overflow-style: none; 
   scrollbar-width: none;  
+}
+
+input, select, textarea {
+  font-size: 16px !important;
 }
