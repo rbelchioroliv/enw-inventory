@@ -1,16 +1,15 @@
 import ExcelJS from 'exceljs';
 
 export async function exportToExcel(equipamentos: any[]) {
-
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Inventário TI');
 
-  
+  // Definição das colunas atualizadas
   worksheet.columns = [
     { header: 'Patrimônio', key: 'patrimonio', width: 15 },
     { header: 'S/N', key: 'numeroSerie', width: 22 },
-    { header: 'MAC Address', key: 'macAddress', width: 20 },
     { header: 'Empresa', key: 'empresa', width: 15 },
+    { header: 'Departamento', key: 'departamento', width: 20 },
     { header: 'Modelo', key: 'modelo', width: 25 },
     { header: 'Usuário', key: 'usuario', width: 25 },
     { header: 'E-mail', key: 'email', width: 30 },
@@ -18,6 +17,16 @@ export async function exportToExcel(equipamentos: any[]) {
     { header: 'Nº Reparos', key: 'reparos', width: 15 },
     { header: 'Status', key: 'status', width: 22 },
     { header: 'Configurações Técnicas', key: 'configuracoes', width: 60 },
+    // Colunas de Periféricos
+    { header: 'Monitor Secundário', key: 'monitorSecundario', width: 25 },
+    { header: 'Monitor Sec. S/N', key: 'monitorSecundarioSN', width: 20 },
+    { header: 'Monitor Sec. Pat.', key: 'monitorSecundarioPatrimonio', width: 20 },
+    { header: 'Teclado', key: 'teclado', width: 20 },
+    { header: 'Teclado S/N', key: 'tecladoSN', width: 20 },
+    { header: 'Mouse', key: 'mouse', width: 20 },
+    { header: 'Mouse S/N', key: 'mouseSN', width: 20 },
+    { header: 'Headset', key: 'headset', width: 20 },
+    { header: 'Headset S/N', key: 'headsetSN', width: 20 },
     { header: 'Data de Cadastro', key: 'criadoEm', width: 20 },
   ];
 
@@ -37,13 +46,12 @@ export async function exportToExcel(equipamentos: any[]) {
     };
   });
 
-  
   equipamentos.forEach((eq) => {
     const row = worksheet.addRow({
       patrimonio: eq.patrimonio,
-      numeroSerie: eq.numeroSerie || 'N/A',
-      macAddress: eq.macAddress,
+      numeroSerie: eq.numeroSerie || '-',
       empresa: eq.empresa,
+      departamento: eq.departamento || '-',
       modelo: eq.modelo,
       usuario: eq.usuarioAtual,
       email: eq.emailCorporativo,
@@ -51,14 +59,23 @@ export async function exportToExcel(equipamentos: any[]) {
       reparos: eq.numeroReparos,
       status: eq.alertaTroca ? '⚠️ TROCA RECOMENDADA' : '✔️ OK',
       configuracoes: eq.configuracoes,
+      
+      monitorSecundario: eq.monitorSecundario || '-',
+      monitorSecundarioSN: eq.monitorSecundarioSN || '-',
+      monitorSecundarioPatrimonio: eq.monitorSecundarioPatrimonio || '-',
+      teclado: eq.teclado || '-',
+      tecladoSN: eq.tecladoSN || '-',
+      mouse: eq.mouse || '-',
+      mouseSN: eq.mouseSN || '-',
+      headset: eq.headset || '-',
+      headsetSN: eq.headsetSN || '-',
+      
       criadoEm: new Date(eq.criadoEm).toLocaleDateString('pt-BR'),
     });
 
-   
     row.alignment = { vertical: 'middle' };
     row.getCell('idade').alignment = { horizontal: 'center' };
     row.getCell('reparos').alignment = { horizontal: 'center' };
-    
     
     const statusCell = row.getCell('status');
     statusCell.font = {
@@ -68,11 +85,10 @@ export async function exportToExcel(equipamentos: any[]) {
     statusCell.alignment = { horizontal: 'center' };
   });
 
-  
+
   const buffer = await workbook.xlsx.writeBuffer();
   const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   const url = window.URL.createObjectURL(blob);
-  
   
   const dateStr = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
   

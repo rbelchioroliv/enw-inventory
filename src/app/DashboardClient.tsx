@@ -31,21 +31,20 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
 
   return (
     <div className="space-y-6 max-w-full overflow-hidden px-2 sm:px-0">
-      
-      
+
       <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-enwGold/20 pb-4 gap-4">
         <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight drop-shadow-sm text-center lg:text-left">
           Visão Geral do <span className="text-enwGold">Inventário</span>
         </h1>
-        
+
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
           <div className="w-full sm:w-auto text-xs sm:text-sm font-medium text-gray-200 bg-enwBlack px-4 py-3 sm:py-2.5 rounded-lg border border-enwGold/20 shadow-inner text-center">
-            Exibindo: <span className="text-enwGold font-bold mx-1">{filteredEquipamentos.length}</span> 
+            Exibindo: <span className="text-enwGold font-bold mx-1">{filteredEquipamentos.length}</span>
             {equipamentos.length !== filteredEquipamentos.length && <span className="text-gray-500">de {equipamentos.length}</span>}
           </div>
-          
-          <button 
-            onClick={() => exportToExcel(filteredEquipamentos)} 
+
+          <button
+            onClick={() => exportToExcel(filteredEquipamentos)}
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 text-white text-sm font-bold rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.2)] transition-all"
           >
             <Download size={18} /> Exportar Excel
@@ -53,7 +52,6 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
         </div>
       </div>
 
-    
       <div className="bg-enwDarkGray/60 border border-white/5 p-4 rounded-xl flex flex-col md:flex-row gap-3 shadow-sm backdrop-blur-sm">
         <div className="relative flex-1 group">
           <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-enwGold transition-colors" />
@@ -68,8 +66,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
           <input type="text" placeholder="Serial Number..." value={filterSN} onChange={(e) => setFilterSN(e.target.value)} className="w-full bg-enwBlack border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:border-enwGold outline-none text-sm" />
         </div>
       </div>
-      
-   
+
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 pt-2">
         {filteredEquipamentos.map((eq) => (
           <div key={eq.id} onClick={() => setSelectedEq(eq)} className={`relative flex flex-col p-5 sm:p-6 rounded-2xl border cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${eq.alertaTroca ? 'border-red-500/30 bg-gradient-to-b from-red-950/30 to-enwDarkGray' : 'border-white/5 bg-enwDarkGray hover:border-enwGold/30'}`}>
@@ -78,7 +75,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
                 <AlertTriangle size={12} /> TROCA SUGERIDA
               </div>
             )}
-            
+
             <div className="flex items-start gap-3 sm:gap-4 mb-4">
               <div className={`p-2.5 sm:p-3.5 rounded-xl border shrink-0 ${eq.alertaTroca ? 'bg-red-950/50 border-red-500/20 text-red-400' : 'bg-enwBlack border-enwGold/20 text-enwGold shadow-inner'}`}>
                 <Laptop size={24} />
@@ -101,16 +98,16 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
               </div>
               <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/5">
                 <div className="min-w-0">
-                  <p className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase mb-0.5"><Hash size={10} className="inline mr-1"/> Patrimônio</p>
+                  <p className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase mb-0.5"><Hash size={10} className="inline mr-1" /> Patrimônio</p>
                   <p className="text-xs sm:text-sm font-medium text-gray-300 truncate">{eq.patrimonio}</p>
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase mb-0.5"><HardDrive size={10} className="inline mr-1"/> Configs</p>
+                  <p className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase mb-0.5"><HardDrive size={10} className="inline mr-1" /> Configs</p>
                   <p className="text-xs text-enwGold/80 truncate">Detalhes...</p>
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-xs text-gray-400">
                 <Wrench size={12} className={eq.numeroReparos > 0 ? 'text-orange-400' : 'text-green-400'} />
@@ -146,12 +143,16 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
             <div className="space-y-4 sm:space-y-6">
               <div className="bg-enwBlack/50 p-4 rounded-xl border border-white/5">
                 <h3 className="text-xs sm:text-sm font-bold text-gray-400 uppercase mb-3 flex items-center gap-2">
-                  <User size={14} className="text-enwGold"/> Utilizador
+                  <User size={14} className="text-enwGold" /> Utilizador
                 </h3>
-                <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
+                <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4">
                   <div>
                     <p className="text-[10px] text-gray-500 mb-0.5">Nome</p>
                     <p className="text-sm text-white font-medium break-words">{selectedEq.usuarioAtual}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-500 mb-0.5">Departamento</p>
+                    <p className="text-sm text-white font-medium break-words">{selectedEq.departamento || "-"}</p>
                   </div>
                   <div>
                     <p className="text-[10px] text-gray-500 mb-0.5">E-mail</p>
@@ -162,7 +163,7 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
 
               <div className="bg-enwBlack/50 p-4 rounded-xl border border-white/5">
                 <h3 className="text-xs sm:text-sm font-bold text-gray-400 uppercase mb-3 flex items-center gap-2">
-                  <Cpu size={14} className="text-enwGold"/> Especificações
+                  <Cpu size={14} className="text-enwGold" /> Especificações
                 </h3>
                 <div className="space-y-4">
                   <div className="bg-enwBlack border border-white/5 p-3 rounded-lg">
@@ -185,9 +186,9 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
 
               <div className="bg-enwBlack/50 p-4 rounded-xl border border-white/5">
                 <h3 className="text-xs sm:text-sm font-bold text-gray-400 uppercase mb-3 flex items-center gap-2">
-                  <Hash size={14} className="text-enwGold"/> Identificadores
+                  <Hash size={14} className="text-enwGold" /> Identificadores
                 </h3>
-                <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-3">
+                <div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-3">
                   <div>
                     <p className="text-[10px] text-gray-500 mb-0.5">Patrimônio</p>
                     <p className="text-sm text-white font-mono bg-white/5 px-2 py-0.5 rounded inline-block">{selectedEq.patrimonio}</p>
@@ -196,12 +197,38 @@ export default function DashboardClient({ equipamentos }: { equipamentos: any[] 
                     <p className="text-[10px] text-gray-500 mb-0.5">Serial Number</p>
                     <p className="text-xs sm:text-sm text-gray-300 font-mono break-all">{selectedEq.numeroSerie || "N/A"}</p>
                   </div>
-                  <div>
-                    <p className="text-[10px] text-gray-500 mb-0.5">MAC Address</p>
-                    <p className="text-xs sm:text-sm text-gray-300 font-mono break-all">{selectedEq.macAddress}</p>
+                </div>
+              </div>
+
+              <div className="bg-enwBlack/50 p-4 rounded-xl border border-white/5">
+                <h3 className="text-xs sm:text-sm font-bold text-gray-400 uppercase mb-3 flex items-center gap-2">
+                  <Laptop size={14} className="text-enwGold" /> Periféricos
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-white/5 p-3 rounded border border-white/5">
+                    <p className="text-xs font-bold text-enwGold mb-1 border-b border-white/10 pb-1">Monitor Secundário</p>
+                    <p className="text-[11px] text-gray-400 mt-1">Mod: <span className="text-white">{selectedEq.monitorSecundario || "-"}</span></p>
+                    <p className="text-[11px] text-gray-400">SN: <span className="text-white">{selectedEq.monitorSecundarioSN || "-"}</span></p>
+                    <p className="text-[11px] text-gray-400">Pat: <span className="text-white">{selectedEq.monitorSecundarioPatrimonio || "-"}</span></p>
+                  </div>
+                  <div className="bg-white/5 p-3 rounded border border-white/5">
+                    <p className="text-xs font-bold text-enwGold mb-1 border-b border-white/10 pb-1">Teclado</p>
+                    <p className="text-[11px] text-gray-400 mt-1">Mod: <span className="text-white">{selectedEq.teclado || "-"}</span></p>
+                    <p className="text-[11px] text-gray-400">SN: <span className="text-white">{selectedEq.tecladoSN || "-"}</span></p>
+                  </div>
+                  <div className="bg-white/5 p-3 rounded border border-white/5">
+                    <p className="text-xs font-bold text-enwGold mb-1 border-b border-white/10 pb-1">Mouse</p>
+                    <p className="text-[11px] text-gray-400 mt-1">Mod: <span className="text-white">{selectedEq.mouse || "-"}</span></p>
+                    <p className="text-[11px] text-gray-400">SN: <span className="text-white">{selectedEq.mouseSN || "-"}</span></p>
+                  </div>
+                  <div className="bg-white/5 p-3 rounded border border-white/5">
+                    <p className="text-xs font-bold text-enwGold mb-1 border-b border-white/10 pb-1">Headset</p>
+                    <p className="text-[11px] text-gray-400 mt-1">Mod: <span className="text-white">{selectedEq.headset || "-"}</span></p>
+                    <p className="text-[11px] text-gray-400">SN: <span className="text-white">{selectedEq.headsetSN || "-"}</span></p>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

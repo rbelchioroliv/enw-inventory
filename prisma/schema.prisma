@@ -9,9 +9,9 @@ datasource db {
 model Equipment {
   id               String   @id @default(cuid())
   empresa          String   
+  departamento     String   // NOVO CAMPO
   patrimonio       String   @unique
-  numeroSerie      String?   @unique
-  macAddress       String
+  numeroSerie      String?  @unique
   modelo           String
   configuracoes    String   
   idadeHardware    Int      
@@ -19,6 +19,18 @@ model Equipment {
   alertaTroca      Boolean  @default(false)
   usuarioAtual     String
   emailCorporativo String
+  
+  // Periféricos (Opcionais)
+  monitorSecundario           String?
+  monitorSecundarioSN         String?
+  monitorSecundarioPatrimonio String?
+  teclado                     String?
+  tecladoSN                   String?
+  mouse                       String?
+  mouseSN                     String?
+  headset                     String?
+  headsetSN                   String?
+
   criadoEm         DateTime @default(now())
   atualizadoEm     DateTime @updatedAt
 }
